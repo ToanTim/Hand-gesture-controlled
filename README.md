@@ -50,7 +50,7 @@ pip install -r requirements.txt
 Run the application with default mode (general):
 
 ```bash
-python src/main.py
+python main.py
 ```
 
 Or specify a mode:
