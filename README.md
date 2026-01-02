@@ -21,12 +21,14 @@ A real-time hand gesture recognition system that enables touch-free control of c
 ## Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/ToanTim/Hand-gesture-controlled.git
 cd Hand-gesture-controlled
 ```
 
 2. Install dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
@@ -66,6 +68,7 @@ python example_media_control.py
 ### Controls
 
 While the application is running:
+
 - **'q'**: Quit the application
 - **'m'**: Switch between modes (general → pdf → media → general)
 
@@ -73,36 +76,36 @@ While the application is running:
 
 ### General (Mouse Control) Mode
 
-| Gesture | Action | Description |
-|---------|--------|-------------|
-| ☝️ Pointing | Move Cursor | Move your index finger to control cursor |
-| 🤏 Pinch | Click | Bring thumb and index finger together |
-| ✌️ Peace Sign | Right Click | Index and middle fingers up |
-| 👆 Swipe Up | Scroll Up | Move hand upward |
-| 👇 Swipe Down | Scroll Down | Move hand downward |
+| Gesture       | Action      | Description                              |
+| ------------- | ----------- | ---------------------------------------- |
+| ☝️ Pointing   | Move Cursor | Move your index finger to control cursor |
+| 🤏 Pinch      | Click       | Bring thumb and index finger together    |
+| ✌️ Peace Sign | Right Click | Index and middle fingers up              |
+| 👆 Swipe Up   | Scroll Up   | Move hand upward                         |
+| 👇 Swipe Down | Scroll Down | Move hand downward                       |
 
 ### PDF Control Mode
 
-| Gesture | Action | Description |
-|---------|--------|-------------|
-| 👆 Swipe Up | Scroll Up | Scroll up in document |
-| 👇 Swipe Down | Scroll Down | Scroll down in document |
-| 👉 Swipe Right | Next Page | Go to next page |
-| 👈 Swipe Left | Previous Page | Go to previous page |
-| 🤏 Pinch | Zoom Out | Decrease zoom level |
-| ✋ Palm Open | Reset Zoom | Reset to 100% zoom |
+| Gesture        | Action        | Description                                                             |
+| -------------- | ------------- | ----------------------------------------------------------------------- |
+| 👆 Swipe Up    | Scroll Up     | Scroll up in document                                                   |
+| 👇 Swipe Down  | Scroll Down   | Scroll down in document                                                 |
+| 👉 Swipe Right | Next Page     | Go to next page                                                         |
+| 👈 Swipe Left  | Previous Page | Go to previous page                                                     |
+| 🤏 Pinch       | Zoom In/Out   | Spread thumb and index; zooms in while distance > 100, stops when ≤ 100 |
+| ✋ Palm Open   | Reset Zoom    | Reset to 100% zoom                                                      |
 
 ### Media Control Mode
 
-| Gesture | Action | Description |
-|---------|--------|-------------|
-| ✋ Palm Open | Play/Pause | Toggle playback |
-| 👉 Swipe Right | Next Track | Skip to next track |
-| 👈 Swipe Left | Previous Track | Go to previous track |
-| 👆 Swipe Up | Volume Up | Increase volume |
-| 👇 Swipe Down | Volume Down | Decrease volume |
-| ✊ Fist | Stop | Stop playback |
-| ✌️ Peace Sign | Mute/Unmute | Toggle mute |
+| Gesture        | Action         | Description          |
+| -------------- | -------------- | -------------------- |
+| ✋ Palm Open   | Play/Pause     | Toggle playback      |
+| 👉 Swipe Right | Next Track     | Skip to next track   |
+| 👈 Swipe Left  | Previous Track | Go to previous track |
+| 👆 Swipe Up    | Volume Up      | Increase volume      |
+| 👇 Swipe Down  | Volume Down    | Decrease volume      |
+| ✊ Fist        | Stop           | Stop playback        |
+| ✌️ Peace Sign  | Mute/Unmute    | Toggle mute          |
 
 ## How It Works
 
@@ -136,17 +139,20 @@ The system consists of several modules:
 ## Troubleshooting
 
 ### Webcam Not Detected
+
 - Check if webcam is properly connected
 - Verify webcam permissions in system settings
 - Try changing the camera ID in `initialize_camera()` method
 
 ### Poor Gesture Recognition
+
 - Improve lighting conditions
 - Ensure hand is fully visible in frame
 - Avoid cluttered backgrounds
 - Adjust detection confidence in `HandDetector` initialization
 
 ### PyAutoGUI Not Working
+
 - On Linux, you may need to install additional dependencies:
   ```bash
   sudo apt-get install python3-tk python3-dev

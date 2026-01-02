@@ -22,6 +22,7 @@ class GestureRecognizer:
             'swipe_up': 'Swipe Up',
             'swipe_down': 'Swipe Down',
             'pinch': 'Pinch',
+            'open_pinch': 'Open Pinch', 
             'unknown': 'Unknown'
         }
         
@@ -47,7 +48,7 @@ class GestureRecognizer:
         fingers_count = sum(fingers)
         
         # Fist - all fingers down
-        if fingers_count == 0:
+        if fingers_count == 0 and distance_thumb_index > 20:
             return 'fist'
         
         # Palm open - all fingers up
@@ -55,23 +56,26 @@ class GestureRecognizer:
             return 'palm'
         
         # Thumbs up - only thumb up
-        if fingers == [1, 0, 0, 0, 0]:
+        if fingers == [1, 0, 0, 0, 0] and distance_thumb_index > 20:
             return 'thumbs_up'
         
         # Thumbs down - special case (would need orientation detection)
         # For now, we'll skip this as it requires more complex logic
         
         # Pointing - only index finger up
-        if fingers == [0, 1, 0, 0, 0]:
+        if fingers == [0, 1, 0, 0, 0] and distance_thumb_index > 20 and distance_thumb_index < 120:
             return 'point'
         
         # Peace sign - index and middle fingers up
-        if fingers == [0, 1, 1, 0, 0]:
+        if fingers == [0, 1, 1, 0, 0] and distance_thumb_index > 20:
             return 'peace'
         
         # OK sign - thumb and index close (pinch gesture)
-        if distance_thumb_index is not None and distance_thumb_index < 40:
+        if distance_thumb_index is not None and distance_thumb_index < 13:
             return 'pinch'
+
+        if distance_thumb_index is not None and distance_thumb_index > 150:
+            return 'open_pinch'
         
         # Three fingers up
         if fingers_count == 3 and fingers[1] == 1 and fingers[2] == 1 and fingers[3] == 1:
@@ -139,11 +143,12 @@ class GestureRecognizer:
         """
         actions = {
             'pdf': {
-                'swipe_up': 'Scroll Up',
-                'swipe_down': 'Scroll Down',
+                'point': 'Scroll Up',
+                'peace': 'Scroll Down',
                 'swipe_left': 'Previous Page',
                 'swipe_right': 'Next Page',
-                'pinch': 'Zoom In/Out',
+                'pinch': 'Zoom Out',
+                'open_pinch': 'Zoom In',
                 'fist': 'Stop',
                 'palm': 'Reset View'
             },

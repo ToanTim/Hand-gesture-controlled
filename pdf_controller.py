@@ -95,12 +95,14 @@ class PDFController:
             Action description or None
         """
         actions = {
-            'swipe_up': lambda: self.scroll_up() and 'Scrolling Up',
-            'swipe_down': lambda: self.scroll_down() and 'Scrolling Down',
+            'point': lambda: self.scroll_up() and 'Scrolling Up',
+            'peace': lambda: self.scroll_down() and 'Scrolling Down',
             'swipe_right': lambda: self.next_page() and 'Next Page',
             'swipe_left': lambda: self.previous_page() and 'Previous Page',
             'pinch': lambda: self.zoom_out() and 'Zoom Out',
+            'open_pinch': lambda: self.zoom_in() and 'Zoom In',
             'palm': lambda: self.reset_zoom() and 'Reset Zoom',
+            'fist': lambda: None,  # No action for fist in PDF mode
         }
         
         action = actions.get(gesture)
