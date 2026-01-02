@@ -40,29 +40,10 @@ pip install -r requirements.txt
 Start the application with a specific mode:
 
 ```bash
-# General mouse control mode (default)
-python main.py
 
 # PDF control mode
 python main.py pdf
 
-# Media control mode
-python main.py media
-```
-
-### Using Example Scripts
-
-Run pre-configured example scripts:
-
-```bash
-# Mouse control
-python example_mouse_control.py
-
-# PDF control (make sure a PDF viewer is open)
-python example_pdf_control.py
-
-# Media control (make sure a media player is open)
-python example_media_control.py
 ```
 
 ### Controls
@@ -74,38 +55,17 @@ While the application is running:
 
 ## Gesture Guide
 
-### General (Mouse Control) Mode
-
-| Gesture       | Action      | Description                              |
-| ------------- | ----------- | ---------------------------------------- |
-| ☝️ Pointing   | Move Cursor | Move your index finger to control cursor |
-| 🤏 Pinch      | Click       | Bring thumb and index finger together    |
-| ✌️ Peace Sign | Right Click | Index and middle fingers up              |
-| 👆 Swipe Up   | Scroll Up   | Move hand upward                         |
-| 👇 Swipe Down | Scroll Down | Move hand downward                       |
-
 ### PDF Control Mode
 
-| Gesture        | Action        | Description                                                             |
-| -------------- | ------------- | ----------------------------------------------------------------------- |
-| 👆 Swipe Up    | Scroll Up     | Scroll up in document                                                   |
-| 👇 Swipe Down  | Scroll Down   | Scroll down in document                                                 |
-| 👉 Swipe Right | Next Page     | Go to next page                                                         |
-| 👈 Swipe Left  | Previous Page | Go to previous page                                                     |
-| 🤏 Pinch       | Zoom In/Out   | Spread thumb and index; zooms in while distance > 100, stops when ≤ 100 |
-| ✋ Palm Open   | Reset Zoom    | Reset to 100% zoom                                                      |
-
-### Media Control Mode
-
-| Gesture        | Action         | Description          |
-| -------------- | -------------- | -------------------- |
-| ✋ Palm Open   | Play/Pause     | Toggle playback      |
-| 👉 Swipe Right | Next Track     | Skip to next track   |
-| 👈 Swipe Left  | Previous Track | Go to previous track |
-| 👆 Swipe Up    | Volume Up      | Increase volume      |
-| 👇 Swipe Down  | Volume Down    | Decrease volume      |
-| ✊ Fist        | Stop           | Stop playback        |
-| ✌️ Peace Sign  | Mute/Unmute    | Toggle mute          |
+| Gesture        | Action        | Description             |
+| -------------- | ------------- | ----------------------- |
+| ☝️ Pointing    | Scroll Up     | Scroll up in document   |
+| ✌️ Peace Sign  | Scroll Down   | Scroll down in document |
+| 👉 Swipe Right | Next Page     | Go to next page         |
+| 👈 Swipe Left  | Previous Page | Go to previous page     |
+| 🤏 Pinch       | Zoom Out      | Decrease zoom level     |
+| 🤏 Open Pinch  | Zoom In       | Increase zoom level     |
+| ✋ Palm Open   | Reset Zoom    | Reset to 100% zoom      |
 
 ## How It Works
 
