@@ -1,24 +1,36 @@
 # Hand Gesture Controlled Interface
 
-A real-time hand gesture recognition system that enables touch-free control of computer applications using webcam-detected hand movements. Built with OpenCV, MediaPipe, and PyAutoGUI.
+Control your computer using hand gestures! This project uses MediaPipe and OpenCV to detect hand gestures and control various applications including PDF viewers, media players, and mouse movements.
 
-## Features
+## 🎥 Demo Videos
 
-- 🖐️ **Real-time Hand Detection**: Uses MediaPipe for accurate hand landmark detection
-- 👆 **Gesture Recognition**: Recognizes multiple hand gestures (fist, palm, pointing, peace sign, pinch, swipes)
-- 📄 **PDF Control**: Navigate and control PDF viewers with intuitive gestures
-- 🎵 **Media Control**: Control media playback, volume, and track navigation
-- 🖱️ **Mouse Control**: Move cursor and perform clicks using hand movements
-- 🔄 **Multiple Modes**: Switch between general, PDF, and media control modes
-- 📊 **Visual Feedback**: Real-time display of detected gestures and actions
+### PDF Navigation
 
-## Requirements
+[![PDF Control Demo]](https://youtu.be/MmyUTw7ZpCQ)
 
-- Python 3.7+
-- Webcam
-- Operating System: Windows, macOS, or Linux
+## ✨ Features
 
-## Installation
+- **Hand Detection**: Real-time hand tracking using MediaPipe
+- **Gesture Recognition**: Recognizes 10+ different gestures
+- **Multiple Control Modes**:
+  - 📄 **PDF Mode**: Navigate and zoom PDF documents
+
+## 🎮 Supported Gestures
+
+| Gesture        | PDF Mode      |
+| -------------- | ------------- |
+| 👆 Point       | Scroll Up     |
+| ✌️ Peace       | Scroll Down   |
+| 👌 Pinch       | Zoom Out      |
+| 🖐️ Palm        | Reset Zoom    |
+| ✊ Fist        | Stop          |
+| 👍 Thumbs Up   | -             |
+| ⬅️ Swipe Left  | Previous Page |
+| ➡️ Swipe Right | Next Page     |
+| ⬆️ Swipe Up    | -             |
+| ⬇️ Swipe Down  | -             |
+
+## 🚀 Installation
 
 1. Clone the repository:
 
@@ -33,11 +45,15 @@ cd Hand-gesture-controlled
 pip install -r requirements.txt
 ```
 
-## Usage
+## 📖 Usage
 
-### Running the Main Application
+Run the application with default mode (general):
 
-Start the application with a specific mode:
+```bash
+python src/main.py
+```
+
+Or specify a mode:
 
 ```bash
 
@@ -48,78 +64,10 @@ python main.py pdf
 
 ### Controls
 
-While the application is running:
+- **Q**: Quit application
+- **M**: Switch between modes (General → PDF → Media)
 
-- **'q'**: Quit the application
-- **'m'**: Switch between modes (general → pdf → media → general)
-
-## Gesture Guide
-
-### PDF Control Mode
-
-| Gesture        | Action        | Description             |
-| -------------- | ------------- | ----------------------- |
-| ☝️ Pointing    | Scroll Up     | Scroll up in document   |
-| ✌️ Peace Sign  | Scroll Down   | Scroll down in document |
-| 👉 Swipe Right | Next Page     | Go to next page         |
-| 👈 Swipe Left  | Previous Page | Go to previous page     |
-| 🤏 Pinch       | Zoom Out      | Decrease zoom level     |
-| 🤏 Open Pinch  | Zoom In       | Increase zoom level     |
-| ✋ Palm Open   | Reset Zoom    | Reset to 100% zoom      |
-
-## How It Works
-
-### Architecture
-
-The system consists of several modules:
-
-1. **hand_detector.py**: Uses MediaPipe to detect hand landmarks in real-time
-2. **gesture_recognizer.py**: Analyzes hand positions to recognize specific gestures
-3. **pdf_controller.py**: Translates gestures to PDF viewer controls
-4. **media_controller.py**: Translates gestures to media player controls
-5. **mouse_controller.py**: Translates gestures to mouse movements and clicks
-6. **main.py**: Main application that integrates all components
-
-### Technology Stack
-
-- **OpenCV**: Video capture and frame processing
-- **MediaPipe**: Hand landmark detection and tracking
-- **PyAutoGUI**: System-level input automation
-- **NumPy**: Numerical computations for gesture recognition
-
-## Tips for Best Performance
-
-1. **Lighting**: Ensure good lighting conditions for better hand detection
-2. **Background**: Use a plain background for improved accuracy
-3. **Distance**: Keep your hand 1-2 feet from the camera
-4. **Camera Position**: Position camera at eye level or slightly above
-5. **Calibration**: Give the system a moment to detect your hand initially
-6. **Gesture Speed**: Perform gestures at moderate speed for better recognition
-
-## Troubleshooting
-
-### Webcam Not Detected
-
-- Check if webcam is properly connected
-- Verify webcam permissions in system settings
-- Try changing the camera ID in `initialize_camera()` method
-
-### Poor Gesture Recognition
-
-- Improve lighting conditions
-- Ensure hand is fully visible in frame
-- Avoid cluttered backgrounds
-- Adjust detection confidence in `HandDetector` initialization
-
-### PyAutoGUI Not Working
-
-- On Linux, you may need to install additional dependencies:
-  ```bash
-  sudo apt-get install python3-tk python3-dev
-  ```
-- On macOS, grant accessibility permissions to Terminal/Python
-
-## Project Structure
+## 📁 Project Structure
 
 ```
 Hand-gesture-controlled/
@@ -127,39 +75,49 @@ Hand-gesture-controlled/
 ├── hand_detector.py             # Hand detection module
 ├── gesture_recognizer.py        # Gesture recognition module
 ├── pdf_controller.py            # PDF control module
-├── media_controller.py          # Media control module
 ├── mouse_controller.py          # Mouse control module
-├── example_pdf_control.py       # PDF control example
-├── example_media_control.py     # Media control example
-├── example_mouse_control.py     # Mouse control example
 ├── requirements.txt             # Python dependencies
 └── README.md                    # This file
 ```
 
-## Contributing
+## 🛠️ Requirements
+
+- Python 3.7+
+- Webcam
+- Dependencies:
+  - OpenCV
+  - MediaPipe
+  - PyAutoGUI
+  - NumPy
+
+## 📝 Configuration
+
+Edit `config/config.json` to customize:
+
+- Gesture sensitivity
+- Action cooldown periods
+- Screen resolution
+- Camera settings
+
+## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## License
+## 📄 License
 
-This project is open source and available under the MIT License.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Acknowledgments
+## 🙏 Acknowledgments
 
-- MediaPipe by Google for hand tracking solution
-- OpenCV community for computer vision tools
-- PyAutoGUI for cross-platform GUI automation
+- [MediaPipe](https://mediapipe.dev/) for hand tracking
+- [OpenCV](https://opencv.org/) for computer vision
+- [PyAutoGUI](https://pyautogui.readthedocs.io/) for system control
 
-## Future Enhancements
+## 📧 Contact
 
-- [ ] Add more gesture types
-- [ ] Implement gesture customization
-- [ ] Add voice command integration
-- [ ] Support for two-hand gestures
-- [ ] Add gesture recording and replay
-- [ ] Machine learning-based custom gesture training
-- [ ] Mobile app companion
+- GitHub: [@ToanTim](https://github.com/ToanTim)
+- Project Link: [https://github.com/ToanTim/Hand-gesture-controlled](https://github.com/ToanTim/Hand-gesture-controlled)
 
-## Contact
+---
 
-For questions or suggestions, please open an issue on GitHub.
+⭐ Star this repo if you find it helpful!
