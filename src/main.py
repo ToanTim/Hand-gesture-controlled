@@ -45,6 +45,7 @@ class HandGestureApp:
         self.current_action = None
         self.current_distance = None
         self.finger_count = 0
+        self.fingers_state = []
         self.zoom_in_active = False
         
     def initialize_camera(self, camera_id=0):
@@ -94,8 +95,14 @@ class HandGestureApp:
         if self.current_distance is not None:
             cv2.putText(frame, f"Dist: {int(self.current_distance)}", (w - 150, 70),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 0), 2)
-        cv2.putText(frame, f"Fingers: {self.finger_count}", (w - 170, 100),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 200, 255), 2)
+        finger_names = ['Thumb', 'Index', 'Middle', 'Ring', 'Pinky']
+        if self.fingers_state:
+            finger_states = [f"{name}:{'Up' if state else 'Down'}" for name, state in zip(finger_names, self.fingers_state)]
+            finger_text = "Fingers " + " ".join(finger_states)
+        else:
+            finger_text = "Fingers: N/A"
+        cv2.putText(frame, finger_text, (10, 120),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 200, 255), 1)
         
         # Draw instructions
         cv2.putText(frame, "Press 'q' to quit | 'm' to change mode", (10, h - 80), 
@@ -160,6 +167,7 @@ class HandGestureApp:
                 if landmark_list:
                     # Get finger states
                     fingers = self.detector.fingers_up(landmark_list)
+                    self.fingers_state = fingers
                     self.finger_count = fingers.count(1)
                     # Get distance between thumb and index for pinch detection
                     distance, _ = self.detector.get_distance(4, 8, landmark_list)
