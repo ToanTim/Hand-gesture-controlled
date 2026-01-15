@@ -42,3 +42,6 @@ Thumbs.db
 
 # Images
 *.png
+
+#evalution results
+src/docs/*
