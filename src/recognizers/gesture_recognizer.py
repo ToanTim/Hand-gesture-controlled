@@ -10,20 +10,20 @@ class GestureRecognizer:
     
     def __init__(self):
         self.gesture_names = {
-            'fist': 'Fist',
-            'palm': 'Palm Open',
-            'thumbs_up': 'Thumbs Up',
-            'thumbs_down': 'Thumbs Down',
-            'point': 'Pointing',
-            'peace': 'Peace Sign',
-            'ok': 'OK Sign',
-            'swipe_left': 'Swipe Left',
-            'swipe_right': 'Swipe Right',
-            'swipe_up': 'Swipe Up',
-            'swipe_down': 'Swipe Down',
-            'pinch': 'Pinch',
-            'open_pinch': 'Open Pinch', 
-            'unknown': 'Unknown'
+            'fist': 'fist',
+            'palm': 'palm',
+            'like': 'like',
+            'thumbs_down': 'thumbs_down',
+            'one': 'one',
+            'peace': 'peace',
+            'ok': 'ok',
+            'swipe_left': 'swipe_left',
+            'swipe_right': 'swipe_right',
+            'swipe_up': 'swipe_up',
+            'swipe_down': 'swipe_down',
+            'pinch': 'pinch',
+            'open_pinch': 'open_pinch', 
+            'unknown': 'unknown'
         }
         
         self.prev_position = None
@@ -57,28 +57,28 @@ class GestureRecognizer:
         
         # Thumbs up - only thumb up
         if fingers == [1, 0, 0, 0, 0] and distance_thumb_index > 20:
-            return 'thumbs_up'
+            return 'like'
         
         # Thumbs down - special case (would need orientation detection)
         # For now, we'll skip this as it requires more complex logic
         
         # Pointing - only index finger up
         if fingers == [0, 1, 0, 0, 0] and distance_thumb_index > 20 and distance_thumb_index < 120:
-            return 'point'
+            return 'one'
         
         # Peace sign - index and middle fingers up
         if fingers == [0, 1, 1, 0, 0] and distance_thumb_index > 20:
             return 'peace'
         
         # OK sign - thumb and index close (pinch gesture)
-        if distance_thumb_index is not None and distance_thumb_index < 13:
-            return 'pinch'
+        #if distance_thumb_index is not None and distance_thumb_index < 13:
+        #    return 'pinch'
 
-        if distance_thumb_index is not None and distance_thumb_index > 150:
-            return 'open_pinch'
+        #if distance_thumb_index is not None and distance_thumb_index > 150:
+        #    return 'open_pinch'
         
         # Three fingers up
-        if fingers_count == 3 and fingers[1] == 1 and fingers[2] == 1 and fingers[3] == 1:
+        if fingers_count == 3 and fingers[2] == 1 and fingers[3] == 1 and fingers[4] == 1:
             return 'ok'
         
         return 'unknown'

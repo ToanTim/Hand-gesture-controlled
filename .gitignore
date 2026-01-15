@@ -24,6 +24,7 @@ wheels/
 venv/
 env/
 ENV/
+data/
 
 # IDE
 .vscode/
@@ -38,3 +39,6 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Images
+*.png

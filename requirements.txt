@@ -2,3 +2,6 @@ opencv-python>=4.8.0
 mediapipe==0.10.13
 pyautogui>=0.9.54
 numpy>=1.24.0
+pytest>=7.0 
+pytest-cov>=4.0
+hypothesis>=6.0
