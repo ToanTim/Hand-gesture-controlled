@@ -10,6 +10,7 @@ Control your computer using hand gestures! This project uses MediaPipe and OpenC
 
 ## ✨ Features
 
+
 - **Hand Detection**: Real-time hand tracking using MediaPipe
 - **Gesture Recognition**: Recognizes 10+ different gestures
 - **Multiple Control Modes**:
@@ -121,3 +122,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ---
 
 ⭐ Star this repo if you find it helpful!
+
