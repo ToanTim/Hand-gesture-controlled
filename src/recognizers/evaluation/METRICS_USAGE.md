@@ -4,6 +4,12 @@
 
 This module provides **production-ready evaluation metrics** for multi-class classification tasks, specifically designed for gesture recognition with class imbalance and visually similar gestures in mind.
 
+**Note:** The metrics module has been refactored following MLOps best practices. Core functionality is now in:
+
+- `src/utils/metrics.py` - Metrics computation and visualization
+- `src/data/loaders.py` - Data loading utilities
+- `src/recognizers/evaluation/eva_recog_metrics.py` - High-level evaluation functions
+
 ## Features
 
 ✅ **All Standard Metrics**
@@ -49,7 +55,7 @@ pip install tensorflow  # TensorFlow
 ### 1. Basic Usage with Numpy Arrays
 
 ```python
-from eva_recog_metrics import GestureClassificationMetrics
+from recognizers.utils.metrics import GestureClassificationMetrics
 import numpy as np
 
 # Your ground truth and predictions
@@ -97,7 +103,7 @@ F1-Score (Macro Avg):          0.7778
 
 ```python
 import torch
-from eva_recog_metrics import GestureClassificationMetrics
+from recognizers.utils.metrics import GestureClassificationMetrics
 
 # PyTorch tensors from your model
 y_true = torch.tensor([0, 1, 2, 0, 1, 2, 0, 1, 2])
@@ -213,7 +219,7 @@ metrics_calc.save_metrics_to_file(
 ### Integration in Training Loop
 
 ```python
-from eva_recog_metrics import GestureClassificationMetrics
+from recognizers.utils.metrics import GestureClassificationMetrics
 
 class GestureTrainer:
     def __init__(self, model, class_names):
@@ -337,7 +343,8 @@ print(report)
 ### Example: Evaluating Your Gesture Recognizer
 
 ```python
-from eva_recog_metrics import evaluate_recognizer, load_hagrid_samples
+from recognizers.evaluation.eva_recog_metrics import evaluate_recognizer
+from data.loaders import load_hagrid_samples
 from recognizers.gesture_recognizer import GestureRecognizer
 
 # Load test data
@@ -531,7 +538,7 @@ GestureClassificationMetrics(
 ### Use Case 1: Comparing Two Models
 
 ```python
-from eva_recog_metrics import GestureClassificationMetrics
+from utils.metrics import GestureClassificationMetrics
 
 # Evaluate Model A
 metrics_calc_a = GestureClassificationMetrics(
