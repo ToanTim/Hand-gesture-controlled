@@ -5,7 +5,7 @@ Hand Gesture Controlled Interface
 import cv2
 import time
 from detectors.hand_detector import HandDetector
-from recognizers.gesture_recognizer import GestureRecognizer
+from recognizers.models.gesture_recognizer import GestureRecognizer
 from controllers.pdf_controller import PDFController
 from controllers.media_controller import MediaController
 from controllers.mouse_controller import MouseController

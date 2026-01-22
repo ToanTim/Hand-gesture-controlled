@@ -22,9 +22,9 @@ except ImportError:
     NUMPY_AVAILABLE = False
     warnings.warn("NumPy not available. Install with: pip install numpy")
 
-# Import from refactored modules
-from recognizers.utils.metrics import GestureClassificationMetrics
-from recognizers.data_utils.loaders import load_hagrid_samples
+# Import from refactored modules (use fully qualified package path for -m execution)
+from src.recognizers.utils.metrics import GestureClassificationMetrics
+from src.recognizers.data_utils.loaders import load_hagrid_samples
 
 
 # Backward compatibility - re-export for existing imports
@@ -247,7 +247,7 @@ if __name__ == '__main__':
         demo_metrics_module()
     else:
         # Run full evaluation with HAGRID dataset
-        from recognizers.models.gesture_recognizer import GestureRecognizer
+        from src.recognizers.models.gesture_recognizer import GestureRecognizer
         
         data_dir = '/home/toantim/ToanFolder/Hand-gesture-controlled/data/hagrid-sample-30k-384p'
         labels = ['fist', 'palm', 'like', 'one', 'peace', 'ok']
