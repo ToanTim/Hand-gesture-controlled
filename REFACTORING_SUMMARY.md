@@ -123,7 +123,7 @@ metrics_calc = GestureClassificationMetrics(class_names=['fist', 'palm'])
 | Component                        | Location                                      | Lines | Purpose                                           |
 | -------------------------------- | --------------------------------------------- | ----- | ------------------------------------------------- |
 | **GestureClassificationMetrics** | `recognizers/utils/metrics.py`                | ~900  | Comprehensive metrics computation & visualization |
-| **load_hagrid_samples**          | `recognizers/data/loaders.py`                 | ~100  | HAGRID dataset loading utility                    |
+| **load_hagrid_samples**          | `recognizers/data_utils/loaders.py`           | ~100  | HAGRID dataset loading utility                    |
 | **evaluate_recognizer**          | `recognizers/evaluation/eva_recog_metrics.py` | ~120  | High-level evaluation orchestration               |
 | **demo_metrics_module**          | `recognizers/evaluation/eva_recog_metrics.py` | ~50   | Demo function with synthetic data                 |
 
