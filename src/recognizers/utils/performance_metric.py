@@ -155,19 +155,24 @@ def get_memory_usage() -> Dict[str, float]:
 
 
 _process = psutil.Process() 
-def get_cpu_usage(interval: Optional[float] = None) -> Dict[str, float]:
+def get_cpu_usage(interval: Optional[float] = None) -> Dict[str, any]:
     """
-    Get current CPU usage statistics.
+    Get current CPU usage statistics including per-core data.
 
     Args:
         interval: Sampling interval in seconds. None means since the last call.
     """
+    
+    per_cpu_percent = psutil.cpu_percent(interval=interval, percpu=True)
+    per_cpu_freq = psutil.cpu_freq(percpu=True) if psutil.cpu_freq(percpu=True) else []
 
     return {
         'process_percent': _process.cpu_percent(interval=interval),
         'system_percent': psutil.cpu_percent(interval=interval),
         'cpu_count': psutil.cpu_count(),
-        'cpu_freq': psutil.cpu_freq().current if psutil.cpu_freq() else 0.0
+        'cpu_freq': psutil.cpu_freq().current if psutil.cpu_freq() else 0.0,
+        'per_cpu_percent': per_cpu_percent,
+        'per_cpu_freq': [freq.current for freq in per_cpu_freq] if per_cpu_freq else []
     }
 
 
