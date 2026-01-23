@@ -12,7 +12,7 @@ def __getattr__(name):
         from recognizers.utils.metrics import GestureClassificationMetrics
         return GestureClassificationMetrics
     elif name == "load_hagrid_samples":
-        from recognizers.data_utils.loaders import load_hagrid_samples
+        from src.recognizers.utils.loaders import load_hagrid_samples
         return load_hagrid_samples
     raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
 

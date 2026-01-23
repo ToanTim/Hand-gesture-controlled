@@ -16,7 +16,7 @@ def test_imports():
         return False
     
     try:
-        from recognizers.data_utils.loaders import load_hagrid_samples
+        from recognizers.utils.loaders import load_hagrid_samples
         print("✓ load_hagrid_samples imported successfully")
     except ImportError as e:
         print(f"✗ Failed to import load_hagrid_samples: {e}")
