@@ -24,7 +24,15 @@ wheels/
 venv/
 env/
 ENV/
-data/
+# Ignore everything inside data/
+data/**
+
+# Allow the folder itself (so Git can see inside)
+!data/
+
+# Allow DVC metafiles
+!data/*.dvc
+!data/**/*.dvc
 
 # IDE
 .vscode/
