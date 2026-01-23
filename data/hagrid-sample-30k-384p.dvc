@@ -1,0 +1,6 @@
+outs:
+- md5: d1b22ae9b00e05a6b9edfd422d776888.dir
+  size: 996450430
+  nfiles: 31851
+  hash: md5
+  path: hagrid-sample-30k-384p
