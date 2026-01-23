@@ -45,3 +45,6 @@ Thumbs.db
 
 #evalution results
 src/docs/evaluation_result
+
+#.env
+.env

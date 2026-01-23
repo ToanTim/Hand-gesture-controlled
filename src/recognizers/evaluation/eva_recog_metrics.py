@@ -24,7 +24,7 @@ except ImportError:
 
 # Import from refactored modules (use fully qualified package path for -m execution)
 from src.recognizers.utils.metrics import GestureClassificationMetrics
-from src.recognizers.data_utils.loaders import load_hagrid_samples
+from src.recognizers.utils.loaders import load_hagrid_samples
 
 
 # Backward compatibility - re-export for existing imports

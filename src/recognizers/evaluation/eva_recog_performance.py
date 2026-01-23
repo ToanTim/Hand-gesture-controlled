@@ -70,6 +70,8 @@ class GesturePerformanceEvaluator:
         # Initialize models
         self.detector = None
         self.recognizer = None
+        self.per_core_cpu_usage = []  # Store per-core CPU data over time
+        self.process_core_usage = []  # Store which core(s) process is using
         
     def load_models(self) -> Dict[str, float]:
         """
@@ -187,6 +189,8 @@ class GesturePerformanceEvaluator:
                     
                     self.metrics.memory_usage.append(memory['rss'])
                     self.metrics.cpu_usage.append(cpu['process_percent'])
+                    self.per_core_cpu_usage.append(cpu.get('per_cpu_percent', []))
+                    self.process_core_usage.append(self.metrics.process.cpu_num())
                     
                     if gpu['available']:
                         self.metrics.gpu_usage.append(gpu['gpu_utilization'])
@@ -216,6 +220,8 @@ class GesturePerformanceEvaluator:
             'timestamps': self.metrics.timestamps,
             'memory_usage': self.metrics.memory_usage,
             'cpu_usage': self.metrics.cpu_usage,
+            'process_core_usage': self.process_core_usage,
+            'per_core_cpu_usage': self.per_core_cpu_usage,
             'gpu_usage': self.metrics.gpu_usage
         }
         
@@ -277,6 +283,14 @@ class GesturePerformanceEvaluator:
         # CPU statistics
         cpu_stats = compute_statistics(benchmark_results['cpu_usage'])
         
+        # Per-core CPU statistics
+        per_core_cpu_stats = {}
+        if benchmark_results.get('per_core_cpu_usage'):
+            # Transpose to get per-core data
+            per_core_data = list(zip(*benchmark_results['per_core_cpu_usage']))
+            for core_idx, core_data in enumerate(per_core_data):
+                per_core_cpu_stats[f'core_{core_idx}'] = compute_statistics(list(core_data))
+        
         # GPU statistics
         gpu_stats = {}
         if benchmark_results['gpu_usage']:
@@ -294,6 +308,7 @@ class GesturePerformanceEvaluator:
             },
             'memory': memory_stats,
             'cpu': cpu_stats,
+            'per_core_cpu': per_core_cpu_stats,
             'gpu': gpu_stats if gpu_stats else {'available': False},
             'frames_processed': benchmark_results['frames_processed'],
             'total_time': benchmark_results['total_time_s']
@@ -454,6 +469,91 @@ class GesturePerformanceEvaluator:
         plt.tight_layout()
         plt.savefig(target_dir / "latency_per_frame.png", dpi=200)
         plt.close()
+        
+        # Gesture Recognizer Process CPU Usage
+        process_cpu = benchmark_results['cpu_usage']
+        if process_cpu:
+            fig, ax = plt.subplots(figsize=(12, 6))
+            ax.plot(process_cpu, label="Gesture Recognizer Process CPU", 
+                   color='#2E86AB', linewidth=2.5, marker='o', markersize=4)
+            ax.axhline(metrics['cpu']['mean'], color='red', linestyle='--', linewidth=2,
+                      label=f"Mean: {metrics['cpu']['mean']:.2f}%")
+            ax.fill_between(range(len(process_cpu)), process_cpu, alpha=0.3, color='#2E86AB')
+            ax.set_xlabel('Sample')
+            ax.set_ylabel('CPU Usage (%)')
+            ax.set_title('Gesture Recognizer Process CPU Usage Over Time')
+            ax.legend(fontsize=11)
+            ax.grid(True, alpha=0.3)
+            ax.set_ylim([0, max(max(process_cpu) * 1.1, 100)])
+            plt.tight_layout()
+            plt.savefig(target_dir / "process_cpu_usage.png", dpi=200)
+            plt.close()
+        
+        # Gesture Recognizer Process Per-Core Distribution (like system plot)
+        process_cores = benchmark_results.get('process_core_usage', [])
+        process_cpu = benchmark_results.get('cpu_usage', [])
+        if process_cores and len(process_cores) > 0 and len(process_cpu) > 0:
+            # Build per-core attribution for process CPU
+            num_cores = int(max(process_cores)) + 1 if len(process_cores) > 0 else 1
+            process_per_core = [[] for _ in range(num_cores)]
+            
+            # Attribute process CPU to the core it's running on
+            for i, (core, cpu_val) in enumerate(zip(process_cores, process_cpu)):
+                for c in range(num_cores):
+                    if c == core:
+                        process_per_core[c].append(cpu_val)
+                    else:
+                        process_per_core[c].append(0)
+            
+            fig, ax = plt.subplots(figsize=(14, 8))
+            colors = plt.cm.tab20(np.linspace(0, 1, num_cores))
+            
+            # Plot each core
+            for core_idx in range(num_cores):
+                ax.plot(process_per_core[core_idx], label=f"Core {core_idx}", 
+                       alpha=0.7, linewidth=2, color=colors[core_idx], marker='o', markersize=3)
+            
+            # Plot overall process CPU
+            ax.plot(process_cpu, label="Total Process CPU", color='black', linestyle='--', 
+                   linewidth=2.5, alpha=0.9)
+            
+            ax.set_xlabel('Sample')
+            ax.set_ylabel('CPU Usage (%)')
+            ax.set_title('Gesture Recognizer CPU Usage Per Core')
+            ax.legend(loc='best', fontsize=9, ncol=2)
+            ax.grid(True, alpha=0.3)
+            ax.set_ylim([0, max(max(process_cpu) * 1.1, 100)])
+            plt.tight_layout()
+            plt.savefig(target_dir / "process_per_core_cpu.png", dpi=200)
+            plt.close()
+        
+        # System Per-Core CPU Usage
+        per_core_cpu = benchmark_results.get('per_core_cpu_usage', [])
+        if per_core_cpu and len(per_core_cpu) > 0:
+            fig, ax = plt.subplots(figsize=(14, 8))
+            
+            # Transpose to get per-core data
+            per_core_data = list(zip(*per_core_cpu))
+            colors = plt.cm.tab20(np.linspace(0, 1, len(per_core_data)))
+            
+            # Plot each core
+            for core_idx, core_data in enumerate(per_core_data):
+                ax.plot(core_data, label=f"Core {core_idx}", alpha=0.7, linewidth=1.5, color=colors[core_idx])
+            
+            # Add mean line for overall system load
+            overall_avg = np.mean(per_core_cpu, axis=1) if len(per_core_cpu) > 0 else []
+            if len(overall_avg) > 0:
+                ax.plot(overall_avg, label="System Average", color='black', linestyle='--', linewidth=2.5, alpha=0.9)
+            
+            ax.set_xlabel('Sample')
+            ax.set_ylabel('Core CPU Usage (%)')
+            ax.set_title('System Per-Core CPU Utilization Over Time')
+            ax.legend(loc='best', fontsize=9, ncol=2)
+            ax.grid(True, alpha=0.3)
+            ax.set_ylim([0, 100])
+            plt.tight_layout()
+            plt.savefig(target_dir / "system_per_core_cpu.png", dpi=200)
+            plt.close()
         
         print(f"✓ Detailed plots saved to: {target_dir}")
     
