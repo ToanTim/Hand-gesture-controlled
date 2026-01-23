@@ -1,0 +1,4 @@
+[core]
+    remote = handgestures3
+['remote "handgestures3"']
+    url = s3://hand-gesture-s3/
